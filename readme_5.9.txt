@@ -4,3 +4,7 @@ Git is free software.
 Git is a distributed version control system.
 
 GIt is a free software distributed under the GPL.
+
+===================================
+
+Lucky Star：Creating a new branch is quick.
