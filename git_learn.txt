@@ -1,0 +1,125 @@
+https://www.liaoxuefeng.com/wiki/896043488029600/898732864121440
+
+github 账号：
+           密码：QWEasd7536*-*
+
+==============================================
+
+查看库当前状态
+git status
+
+查看指定文件修改内容
+git diff xxx.txt
+
+查看操作记录
+git log
+
+1.在指定文件夹下创建版本库
+git init
+
+2.提交指定文件到版本库(缓存区)(可多次添加)
+git add xxx.txt
+
+3.添加指定文件到版本库(为add的文件不会被添加)
+git commit -m "操作说明"
+
+4.将版本库回退到上一个版本
+git reset --hard HEAD^
+
+5.将版本改为指定某版(commit id)
+git reset --hard 5b74f
+
+6.查看操作及对应commit id
+git reflog
+
+7.将文件回退到之前(最近的add或commit)的状态
+git restore xxx.txt
+
+8.撤销文件在未添加(commit)之前的提交(add)操作
+   可在提交(add)后又进行修改之后执行此步，然后使用(7.)直接回退到上一个库版本
+git restore --staged xxx.txt
+
+9.当在工作区手动删除某些文件后
+   撤销此次删除，可通过git status查看删除的文件
+git restore xxx.txt
+   确定在版本库中也删除此项
+git rm xxx.txt → git commit -m "remove"
+
+10.将本地库与github远程库相连
+git remote add origin git@github.com:another0711/project_5.9.git
+
+11.将本地库内容推送到远程库中(仅第一次推送需要加 -u)
+git push -u origin master
+
+12.查看并解除与远程库的链接
+git remote -v
+git remote rm origin
+
+13.将远程库内容克隆为本地库
+git clone git@github.com:用户名/库名.git
+
+14.创建新的分支
+git switch -c dev
+(git branch dev → git switch dev)
+
+15.查看当前所有分支
+git branch
+
+16.仅一方修改：将指定分支(dev)的工作成果合并到现有分支(例如：master)上
+git merge --no-ff -m "conflict fixed" dev
+
+17.两方同时修改：若存在冲突需要手动打开xxx.txt文件修改后，进行提交及添加
+git add xxx.txt   →   git commit -m "conflict fixed"
+
+18.删除指定分支
+git branch -d dev
+
+19.修bug分支(将此分支内暂未修改完的内容先保存add+stash，若只add，切换分支后未修改完的内容不会隐藏)
+git stash   →   git stash pop
+    将master修改后的bug整合到此分支：某commit-id(4c805e2)，需在执行此操作后在pop
+git cherry-pick 4c805e2
+
+20.新建分支修改内容已经添加(commit)但尚未合并(merge)，需要强行删除
+git branch -D dev
+
+21.从远程库克隆到本地库，默认只有master分支，若想下载其他分支，需在本地
+git checkout -b dev origin/dev
+
+22.从本地库推送某分支到远程库时，若此分支有多人同时修改会失败
+    先建立本地与远程库链接
+git branch --set-upstream-to=origin/dev  dev   →   git pull
+
+23.git pull后若有冲突，需如上手动解决，再add，commit和push
+git add xxx.txt   →   git commit -m "fix env conflict"   →   git push origin dev
+     
+24.将历史提交记录改为一条直线(git log --graph --pretty=oneline --abbrev-commit)
+git rebase
+
+25.创建标签(默认打在最新提交的commit上)，在需要打标签的分支上
+git tag v1.0
+    需要查看所以标签
+git tag
+    对某次commit(id f52c633)打标签v0.9
+git tag v0.9 f52c633
+    显示标签信息
+git show v0.9
+    删除标签
+git tag -d v0.9
+    推送标签到远程库
+git push origin v0.9
+    一次性推送所有标签
+git push origin --tags
+    删除远程库标签：先删除本地标签，再删除远程库标签
+git push origin :refs/tags/v0.9
+
+26. 自定义名称
+git config --global alias.ci commit
+git config --global alias.br branch
+
+==============================================
+
+报错：Another git process seems to be running in this repository
+解决：rm .git/index.lock
+
+报错：如何从git log中退出
+解决：英文键盘下按：q
